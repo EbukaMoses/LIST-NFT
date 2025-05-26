@@ -21,11 +21,13 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
                 </QueryClientProvider>
             </WagmiProvider>
             <Toaster
-                position="bottom-right"
+                position="top-right"
                 reverseOrder={false}
                 gutter={8}
                 containerClassName=""
                 toastOptions={{
+                    className: 'animate-slide-in-right',
+                    duration: 3000,
                     style: {
                         backgroundColor: "black",
                         color: "white",

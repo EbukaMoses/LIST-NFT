@@ -2,17 +2,38 @@ import { contextconfig } from "../config/Usecontext";
 import m1 from "/m1.svg"
 import m2 from "/m1.svg"
 import { IoClose } from 'react-icons/io5';
+import { toast } from 'react-hot-toast';
+import type { Connector } from 'wagmi';
 
 interface ModalProps {
     handleModal: () => void;
 }
 
 const Modal = ({ handleModal }: ModalProps) => {
+
+
     const contextValue = contextconfig();
     if (!contextValue) return null;
+    const { connectors, connect, data, switchChain, chainID } = contextValue;
 
-    const { address, connectors, connect, isPending } = contextValue;
+    const handleConnect = async (connector: Connector) => {
+        // alert(`ChainID: ${chainID}, Data ChainId: ${data}`);
+        try {
+            if (chainID != 4202) {
+                toast.error("You are not connected to Chain");
+                if (switchChain) switchChain(chainID);
+                return;
+            }
 
+            await connect({ connector });
+
+
+
+        } catch (err) {
+            toast.error('Connection failed');
+            console.error(err);
+        }
+    };
 
 
     return (
@@ -32,7 +53,7 @@ const Modal = ({ handleModal }: ModalProps) => {
                         <div className='flex flex-col gap-6 mb-10'>
                             <div className="flex flex-col gap-2">
                                 {connectors.map((connector: any) => (
-                                    <button key={connector.id} onClick={() => connect({ connector })} className='flex items-center gap-2 px-4 py-2 hover:bg-[#e6e6e6] hover:shadow-2xl border-white text-black font-semibold'>
+                                    <button key={connector.id} onClick={() => handleConnect(connector)} className='flex items-center gap-2 px-4 py-2 hover:bg-[#e6e6e6] hover:shadow-2xl border-white text-black font-semibold'>
                                         <img src={connector.icon} className="w-6 h-6" alt="" />  {connector.name}
 
                                     </button>

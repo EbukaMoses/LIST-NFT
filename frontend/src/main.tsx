@@ -4,6 +4,7 @@ import { createRoot } from "react-dom/client";
 import App from "./App.tsx";
 import "./App.css"
 import Layout from "./ui/Layout.tsx";
+import Mynft from "./pages/Mynft.tsx";
 
 
 const RouterLayout = () => {
@@ -23,10 +24,10 @@ const router = createBrowserRouter([
         path: "/",
         element: <App />,
       },
-      // {
-      //   path: "/about",
-      //   element: <About />,
-      // },
+      {
+        path: "/mtnft",
+        element: <Mynft />,
+      },
       // {
       //   path: "*",
       //   element: <NotFound />,

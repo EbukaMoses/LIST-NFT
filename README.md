@@ -1,15 +1,6 @@
-# Sample Hardhat Project
+# Live Link
+https://list-nft-zeta.vercel.app/
 
-This project demonstrates a basic Hardhat use case. It comes with a sample contract, a test for that contract, and a Hardhat Ignition module that deploys that contract.
 
-Try running some of the following tasks:
-
-```shell
-npx hardhat help
-npx hardhat test
-REPORT_GAS=true npx hardhat test
-npx hardhat node
-npx hardhat ignition deploy ./ignition/modules/Lock.ts
-```
-#======Contract Deployed======
+# Contract Deployed Address
 Contract Address:  0x18d6fbf54748579B2201025140d69e38fa2278d0

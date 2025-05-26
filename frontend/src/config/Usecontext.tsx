@@ -3,7 +3,7 @@ import { createContext, useContext } from 'react';
 import type { ReactNode } from 'react';
 // import { useAccount, useConnect } from 'wagmi';
 import type { Connector } from 'wagmi';
-import { useAccount, useConnectors, useConnect, useDisconnect, useSwitchChain, useBalance } from 'wagmi'
+import { useAccount, useConnectors, useChainId, useConnect, useDisconnect, useSwitchChain, useBalance } from 'wagmi'
 
 
 interface ContextValue {
@@ -11,6 +11,15 @@ interface ContextValue {
     connectors: readonly Connector[];
     connect: any;
     isPending: boolean;
+    disconnect: () => void;
+    isConnected: boolean;
+    data: {
+        formatted: string;
+        symbol: string;
+        chainId: number;
+    } | undefined;
+    switchChain: any;
+    chainID: number | undefined;
 }
 
 const context = createContext<ContextValue | undefined>(undefined);
@@ -21,13 +30,14 @@ interface ContextApiProps {
 
 export const ContextApi = ({ children }: ContextApiProps) => {
     const { address, isConnected } = useAccount();
+    const chainID = useChainId();
     const { connectors, connect, isPending } = useConnect();
     const { disconnect } = useDisconnect();
+    const { switchChain } = useSwitchChain();
 
     const { data } = useBalance({
         address,
-        chainId: 1, // Optional: defaults to mainnet
-        watch: true, // Optional: auto-refreshes on new blocks
+        chainId: 4202, // Optional: defaults to mainnet
     });
 
     const value = {
@@ -38,6 +48,8 @@ export const ContextApi = ({ children }: ContextApiProps) => {
         address,
         isConnected,
         data,
+        switchChain,
+        chainID,
     };
 
     return <context.Provider value={value}>{children}</context.Provider>;
